@@ -12,20 +12,34 @@
       padding: 0;
     }
 
-    body {
-        overflow: hidden;
+    html, body {
+      height: 100%;
     }
 
-    canvas {
+    body {
+      height: 100%;
+      overflow: hidden;
       background-color: black;
-      touch-action: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 </head>
 <body>
-    <img id="map_1" src="./assets/peakpx.jpg" hidden>
-    <img id="player_up_1" src="./assets/player_up_1.png" hidden>
-    <img id="player_up_2" src="./assets/player_up_2.png" hidden>
+    <img id="map_1" src="./assets/maps/map_1.jpg" hidden>
+    <img id="player_up_1" src="./assets/player/player_up_1.png" hidden>
+    <img id="player_up_2" src="./assets/player/player_up_2.png" hidden>
+    <img id="player_up_3" src="./assets/player/player_up_3.png" hidden>
+    <img id="player_down_1" src="./assets/player/player_down_1.png" hidden>
+    <img id="player_down_2" src="./assets/player/player_down_2.png" hidden>
+    <img id="player_down_3" src="./assets/player/player_down_3.png" hidden>
+    <img id="player_left_1" src="./assets/player/player_left_1.png" hidden>
+    <img id="player_left_2" src="./assets/player/player_left_2.png" hidden>
+    <img id="player_left_3" src="./assets/player/player_left_3.png" hidden>
+    <img id="player_right_1" src="./assets/player/player_right_1.png" hidden>
+    <img id="player_right_2" src="./assets/player/player_right_2.png" hidden>
+    <img id="player_right_3" src="./assets/player/player_right_3.png" hidden>
     <canvas></canvas>
     <script src="./index.js"></script>
 </body>
