@@ -6,9 +6,27 @@
   <meta name="description" content="Snake">
   <meta name="author" content="mnunez">
   <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    canvas {
+      background-color: black;
+      touch-action: none;
+    }
+  </style>
 </head>
 <body>
-    <div id="test">Hello World!</div>
+    <img id="map_1" src="./assets/peakpx.jpg" hidden>
+    <img id="player_up_1" src="./assets/player_up_1.png" hidden>
+    <img id="player_up_2" src="./assets/player_up_2.png" hidden>
+    <canvas></canvas>
     <script src="./index.js"></script>
 </body>
 </html>
