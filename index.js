@@ -1,141 +1,120 @@
-const canvas = document.querySelector('canvas');
-const c = canvas.getContext('2d');
+// Screen Setup
+const canvas = document.querySelector("canvas");
+const c = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 500;
 
-class Sprite {
-    constructor({ image, position, scale = 1, speed = 1 }) {
-        this.image = image;
-        this.scale = scale;
-        this.dimension = {
-            width: this.image.width * scale,
-            height: this.image.height * scale
-        };
-        this.dimension.height = image.height * scale;
-        this.position = position;
-        this.speed = speed;
-    }
-
-    draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.dimension.width, this.dimension.height);
-    }
-
-    move({ dx, dy }) {
-        this.position.x += dx;
-        this.position.y += dy;
-    }
-
-    moveLeft() {
-        this.position.x -= this.speed;
-    }
-
-    moveRight() {
-        this.position.x += this.speed;
-    }
-
-    moveUp() {
-        this.position.y += this.speed;
-    }
-
-    moveDown() {
-        this.position.y -= this.speed;
-    }
-}
-
-const speed = 5;
-const velocity = {
-    dx: 0,
-    dy: 0
-}
-
-let playerSpriteIndex = 0;
-function rotatePlayerSpriteIndex() {
-    if (++playerSpriteIndex > 2) {
-        playerSpriteIndex = 0;
-    }
-    console.log(playerSpriteIndex);
-    return playerSpriteIndex;
-}
-const playerImages = {
-    UP: [document.getElementById('player_up_1'), document.getElementById('player_up_2'), document.getElementById('player_up_3')],
-    DOWN: [document.getElementById('player_down_1'), document.getElementById('player_down_2'), document.getElementById('player_down_3')],
-    LEFT: [document.getElementById('player_left_1'), document.getElementById('player_left_2'), document.getElementById('player_left_3')],
-    RIGHT: [document.getElementById('player_right_1'), document.getElementById('player_right_2'), document.getElementById('player_right_3')],
-}
-
-const map1 = document.getElementById("map_1");
+// Game State
 const mapSprite = new Sprite({
-    image: map1,
-    position: {x: -80, y: -1650},
-    scale: 1.25
+  image: map1,
+  position: { x: 0, y: -1300 },
+  scale: 1.25,
+  speed: 5,
 });
 
-const playerUp1 = document.getElementById("player_up_1");
-const playerSprite = new Sprite({
-    image: playerImages.UP[playerSpriteIndex],
-    position: {
-        x: canvas.width / 2 - playerUp1.width / 2, 
-        y: canvas.height / 2 - playerUp1.height / 2
-    }
+const initialPlayerSprite = playerImages.DOWN[0];
+const playerSprite = new PlayerSprite({
+  image: initialPlayerSprite,
+  position: {
+    x: canvas.width / 2 - initialPlayerSprite.width / 2,
+    y: canvas.height / 2 - initialPlayerSprite.height / 2,
+  },
+  upFrames: playerImages.UP,
+  downFrames: playerImages.DOWN,
+  leftFrames: playerImages.LEFT,
+  rightFrames: playerImages.RIGHT,
 });
 
+let direction = Direction.NONE;
+
+let playerAnimationInterval = setInterval(() => {
+  switch (direction) {
+    case Direction.UP:
+      playerSprite.walkUp();
+      break;
+    case Direction.DOWN:
+      playerSprite.walkDown();
+      break;
+    case Direction.LEFT:
+      playerSprite.walkLeft();
+      break;
+    case Direction.RIGHT:
+      playerSprite.walkRight();
+      break;
+    default:
+      playerSprite.stop();
+  }
+}, 50);
+
+// Scenes
+function drawOverworldScene() {
+  mapSprite.updateThenDraw();
+  playerSprite.draw();
+}
+
+// Game Loop
 function animate() {
-    mapSprite.move(velocity);
-    mapSprite.draw();
-    playerSprite.draw();
-    requestAnimationFrame(animate);
+  c.fillRect(0, 0, canvas.width, canvas.height);
+  drawOverworldScene();
+  requestAnimationFrame(animate);
 }
 animate();
 
-window.addEventListener('keydown', function(e) {
-    switch (e.key) {
-        case 'w':
-        case 'W':
-        case 'ArrowUp':
-            velocity.dx = 0;
-            velocity.dy = speed;
-            playerSprite.image = playerImages.UP[rotatePlayerSpriteIndex()];       
-            break;  
-        case 'a':
-        case 'A':
-        case 'ArrowLeft':
-            velocity.dx = speed;
-            velocity.dy = 0;
-            playerSprite.image = playerImages.LEFT[rotatePlayerSpriteIndex()]; 
-            break;    
-        case 's':
-        case 'S':
-        case 'ArrowDown':
-            velocity.dx = 0;
-            velocity.dy = -speed;  
-            playerSprite.image = playerImages.DOWN[rotatePlayerSpriteIndex()];     
-            break;
-        case 'd':
-        case 'D':
-        case 'ArrowRight':
-            velocity.dx = -speed;
-            velocity.dy = 0; 
-            playerSprite.image = playerImages.RIGHT[rotatePlayerSpriteIndex()];       
-            break;          
-    }
+// Listeners
+window.addEventListener("keydown", function (e) {
+  switch (e.key) {
+    case "w":
+    case "W":
+    case "ArrowUp":
+      direction = Direction.UP;
+      mapSprite.panUp();
+      break;
+    case "a":
+    case "A":
+    case "ArrowLeft":
+      direction = Direction.LEFT;
+      mapSprite.panLeft();
+      break;
+    case "s":
+    case "S":
+    case "ArrowDown":
+      direction = Direction.DOWN;
+      mapSprite.panDown();
+      break;
+    case "d":
+    case "D":
+    case "ArrowRight":
+      direction = Direction.RIGHT;
+      mapSprite.panRight();
+      break;
+  }
 });
 
-window.addEventListener('keyup', function(e) {
-    switch (e.key) {
-        case 'w':
-        case 'W':
-        case 'ArrowUp': 
-        case 'a':
-        case 'A':
-        case 'ArrowLeft':  
-        case 's':
-        case 'S':
-        case 'ArrowRight':
-        case 'd':
-        case 'D':
-        case 'ArrowDown':
-            velocity.dx = 0;
-            velocity.dy = 0;     
-            break;          
-    }
+window.addEventListener("keyup", function (e) {
+  switch (e.key) {
+    case "w":
+    case "W":
+    case "ArrowUp":
+      direction = Direction.NONE;
+      mapSprite.stop();
+      break;
+    case "a":
+    case "A":
+    case "ArrowLeft":
+      direction = Direction.NONE;
+      mapSprite.stop();
+      break;
+    case "s":
+    case "S":
+    case "ArrowRight":
+      direction = Direction.NONE;
+      mapSprite.stop();
+      break;
+    case "d":
+    case "D":
+    case "ArrowDown":
+      direction = Direction.NONE;
+      mapSprite.stop();
+      break;
+  }
 });

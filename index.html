@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Game 1</title>
-  <meta name="description" content="Snake">
-  <meta name="author" content="mnunez">
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <title>Game 1</title>
+    <meta name="description" content="Snake" />
+    <meta name="author" content="mnunez" />
+    <link rel="stylesheet" href="css/styles.css?v=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
 
-    html, body {
-      height: 100%;
-    }
+      html,
+      body {
+        height: 100%;
+      }
 
-    body {
-      height: 100%;
-      overflow: hidden;
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
-</head>
-<body>
-    <img id="map_1" src="./assets/maps/map_1.jpg" hidden>
-    <img id="player_up_1" src="./assets/player/player_up_1.png" hidden>
-    <img id="player_up_2" src="./assets/player/player_up_2.png" hidden>
-    <img id="player_up_3" src="./assets/player/player_up_3.png" hidden>
-    <img id="player_down_1" src="./assets/player/player_down_1.png" hidden>
-    <img id="player_down_2" src="./assets/player/player_down_2.png" hidden>
-    <img id="player_down_3" src="./assets/player/player_down_3.png" hidden>
-    <img id="player_left_1" src="./assets/player/player_left_1.png" hidden>
-    <img id="player_left_2" src="./assets/player/player_left_2.png" hidden>
-    <img id="player_left_3" src="./assets/player/player_left_3.png" hidden>
-    <img id="player_right_1" src="./assets/player/player_right_1.png" hidden>
-    <img id="player_right_2" src="./assets/player/player_right_2.png" hidden>
-    <img id="player_right_3" src="./assets/player/player_right_3.png" hidden>
+      body {
+        height: 100%;
+        overflow: hidden;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <img id="map_1" src="./assets/maps/map_1.jpg" hidden />
+    <img id="player_up_1" src="./assets/player/player_up_1.png" hidden />
+    <img id="player_up_2" src="./assets/player/player_up_2.png" hidden />
+    <img id="player_up_3" src="./assets/player/player_up_3.png" hidden />
+    <img id="player_down_1" src="./assets/player/player_down_1.png" hidden />
+    <img id="player_down_2" src="./assets/player/player_down_2.png" hidden />
+    <img id="player_down_3" src="./assets/player/player_down_3.png" hidden />
+    <img id="player_left_1" src="./assets/player/player_left_1.png" hidden />
+    <img id="player_left_2" src="./assets/player/player_left_2.png" hidden />
+    <img id="player_left_3" src="./assets/player/player_left_3.png" hidden />
+    <img id="player_right_1" src="./assets/player/player_right_1.png" hidden />
+    <img id="player_right_2" src="./assets/player/player_right_2.png" hidden />
+    <img id="player_right_3" src="./assets/player/player_right_3.png" hidden />
     <canvas></canvas>
+    <script src="./assets-loader.js"></script>
+    <script src="./engine.js"></script>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>
